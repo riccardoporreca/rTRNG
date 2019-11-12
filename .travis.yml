@@ -10,5 +10,10 @@ matrix:
     after_success:
     - Rscript -e 'covr::codecov()'
   - r: oldrel
+  - os: osx
+    r: release
+  - os: osx
+    r: release
+    disable_homebrew: true
 
 warnings_are_errors: true
