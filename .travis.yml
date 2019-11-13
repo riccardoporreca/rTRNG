@@ -3,6 +3,9 @@
 language: R
 cache: packages
 
+before_script:
+- echo "====/n====/n====/n====/n====/n====/n====/n"
+
 matrix:
   include:
 #  - r: devel
@@ -12,8 +15,8 @@ matrix:
 #  - r: oldrel
   - os: osx
     r: release
-  - os: osx
-    r: release
-    disable_homebrew: true
+#  - os: osx
+#    r: release
+#    disable_homebrew: true
 
 warnings_are_errors: true
