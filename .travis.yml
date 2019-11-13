@@ -6,7 +6,7 @@ cache: packages
 before_script:
 - echo "====\n====\n====\n====\n====\n====\n====\n"
 - R CMD INSTALL .
-- R -e "rTRNG::LdFlags(); list.files(system.file(package = 'rTRNG'), recursive = TRUE)"
+- R -e "rTRNG::LdFlags(); list.files(system.file(package = 'rTRNG'), recursive = TRUE); source('inst/demos/rTRNGinPkg.R')"
 - echo "====\n====\n====\n====\n====\n====\n====\n"
 
 matrix:
