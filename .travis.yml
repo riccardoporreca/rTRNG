@@ -4,7 +4,10 @@ language: R
 cache: packages
 
 before_script:
-- echo "====/n====/n====/n====/n====/n====/n====/n"
+- echo "====\n====\n====\n====\n====\n====\n====\n"
+- R CMD INSTALL .
+- R -e "rTRNG::LdFlags(); list.files(system.file(package = 'rTRNG'), recursive = TRUE)"
+- echo "====\n====\n====\n====\n====\n====\n====\n"
 
 matrix:
   include:
