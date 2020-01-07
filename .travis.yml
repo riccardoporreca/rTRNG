@@ -17,6 +17,7 @@ matrix:
 #    - Rscript -e 'covr::codecov()'
 #  - r: oldrel
   - os: osx
+    osx_image: xcode11.3
     r: release
 #  - os: osx
 #    r: release
