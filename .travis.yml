@@ -3,6 +3,9 @@
 language: R
 cache: packages
 
+script:
+  - R CMD INSTALL .
+
 matrix:
   include:
   - r: devel
