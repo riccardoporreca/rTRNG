@@ -1,5 +1,5 @@
 CXX_STD = CXX11
-PKG_LIBS += --enable-static --disable-shared $(shell ${R_HOME}/bin/Rscript \
+PKG_LIBS += $(shell ${R_HOME}/bin/Rscript \
               -e "RcppParallel::RcppParallelLibs()")
 
 PKG_CPPFLAGS += -I../inst/include
