@@ -8,6 +8,7 @@ script:
   - Rscript -e 'remotes::install_deps(dependencies = TRUE)'
   - R CMD INSTALL .
   - ls -la /Users/travis/R/Library/rTRNG/libs/rTRNG.so
+  - R CMD otool -L /Users/travis/R/Library/rTRNG/libs/rTRNG.so
   - Rscript -e 'library(rTRNG);testthat::test_dir("tests/testthat")'
   - R CMD build --no-build-vignettes .
   - R CMD check *.tar.gz
