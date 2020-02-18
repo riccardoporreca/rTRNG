@@ -4,15 +4,17 @@ language: R
 cache: packages
 
 script:
+  - Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes")'
+  - Rscript -e 'remotes::install_deps(dependencies = TRUE)'
   - R CMD INSTALL .
 
 matrix:
   include:
-  - r: devel
-  - r: release
-    after_success:
-    - Rscript -e 'covr::codecov()'
-  - r: oldrel
+#  - r: devel
+#  - r: release
+#    after_success:
+#    - Rscript -e 'covr::codecov()'
+#  - r: oldrel
   - os: osx
     r: release
   - os: osx
