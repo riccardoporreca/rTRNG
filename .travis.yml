@@ -7,6 +7,7 @@ script:
   - Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes")'
   - Rscript -e 'remotes::install_deps(dependencies = TRUE)'
   - R CMD INSTALL .
+  - Rscript -e 'library(rTRNG);testthat::test_dir("tests/testthat")'
 
 matrix:
   include:
