@@ -8,6 +8,8 @@ script:
   - Rscript -e 'remotes::install_deps(dependencies = TRUE)'
   - R CMD INSTALL .
   - Rscript -e 'library(rTRNG);testthat::test_dir("tests/testthat")'
+  - R CMD build --no-build-vignettes .
+  - R CMD check *.tar.gz
 
 matrix:
   include:
