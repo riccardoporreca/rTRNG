@@ -6,10 +6,12 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    container: rhub/ubuntu-rchk:latest
+    container: rocker/r-ver:latest
 
     steps:
     - uses: actions/checkout@v2
+    - name: Install system dependencies
+      run: apt-get update && apt-get install -y --no-install-recommends libcurl4-openssl-dev
     - name: Install Package dependencies
       run: |
         R --slave -e "install.packages('remotes', repos = 'https://cloud.r-project.org')"
