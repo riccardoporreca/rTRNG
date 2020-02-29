@@ -11,7 +11,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install Package dependencies
-      run: install2.r remotes && R -e "remotes::install_deps()"
+      run: install2.r remotes && R -e "remotes::install_deps(dependencies = TRUE)"
     - name: Build package
       run: R CMD build .
     - name: Upload built package
