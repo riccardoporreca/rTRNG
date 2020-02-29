@@ -6,12 +6,14 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    container: rocker/r-ver:latest
+    container: rhub/ubuntu-rchk:latest
 
     steps:
     - uses: actions/checkout@v2
     - name: Install Package dependencies
-      run: install2.r remotes && R -e "remotes::install_deps(dependencies = TRUE)"
+      run: |
+        R --slave -e "install.packages('remotes', repos = 'https://cloud.r-project.org')"
+        R --slave -e "remotes::install_deps(dependencies = TRUE, repos = 'https://cloud.r-project.org')"
     - name: Build package
       run: R CMD build .
     - name: Upload built package
