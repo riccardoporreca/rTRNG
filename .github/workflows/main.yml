@@ -18,11 +18,13 @@ jobs:
         R --slave -e "remotes::install_deps(dependencies = TRUE, repos = 'https://cloud.r-project.org')"
     - name: Build package
       run: R CMD build .
+    - name: ls
+      run: ls -Rla
     - name: Upload built package
       uses: actions/upload-artifact@v1
       with:
         name: pkg_tarball
-        path: rTRNG.tar.gz
+        path: rTRNG_*.tar.gz
 
   macos-check:
     
