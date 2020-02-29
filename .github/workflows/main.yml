@@ -21,11 +21,18 @@ jobs:
     - name: Upload built package
       uses: actions/upload-artifact@v1
       with:
-        name: bkg_tarball
+        name: pkg_tarball
         path: rTRNG.tar.gz
-    - name: Run a one-line script
-      run: echo Hello, world!
-    - name: Run a multi-line script
-      run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+
+  macos-check:
+    
+    runs-on: macos
+    needs: build
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: pkg_tarball
+      - name: Check
+        run: R CMD check pkg_tarball/rTRNG.tar.gz
