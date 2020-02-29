@@ -11,9 +11,14 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install Package dependencies
-      run: |
-        install2.r remotes
-        && R -e "remoes::install_deps()"
+      run: install2.r remotes && R -e "remoes::install_deps()"
+    - name: Build package
+      run: R CMD build .
+    - name: Upload built package
+      uses: actions/upload-artifact@v1
+      with:
+        name: bkg_tarball
+        path: rTRNG.tar.gz
     - name: Run a one-line script
       run: echo Hello, world!
     - name: Run a multi-line script
