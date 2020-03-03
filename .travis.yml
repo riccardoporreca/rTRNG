@@ -4,8 +4,9 @@ language: R
 cache: packages
 
 os:
-#- linux
+- linux
 - osx
+  disable_homebrew: true
 
 r:
 - release
@@ -13,13 +14,12 @@ r:
 
 script:
   - Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes")'
-  - Rscript -e 'remotes::install_deps(dependencies = TRUE)'
-  - R CMD INSTALL .
-  - ls -la /Users/travis/R/Library/rTRNG/libs/rTRNG.soUse matix expansion keys
-  - R CMD otool -L /Users/travis/R/Library/rTRNG/libs/rTRNG.so
-  - Rscript -e 'library(rTRNG);testthat::test_dir("tests/testthat")'
-  - R CMD build --no-build-vignettes .
-  - R CMD check *.tar.gz
+#  - Rscript -e 'remotes::install_deps(dependencies = TRUE)'
+#  - R CMD INSTALL .
+#  - R CMD otool -L /Users/travis/R/Library/rTRNG/libs/rTRNG.so
+#  - Rscript -e 'library(rTRNG);testthat::test_dir("tests/testthat")'
+#  - R CMD build --no-build-vignettes .
+#  - R CMD check *.tar.gz
 
 # matrix:
 #  include:
