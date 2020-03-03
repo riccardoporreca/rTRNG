@@ -13,14 +13,8 @@ r:
 - release
 #- oldrel
 
-matrix:
-  exclude:
-  - r: release
-    os: linux
-  include:
-  - r: release
-    os: linux
-    after_success:
-    - Rscript -e 'covr::codecov()'
+after_success:
+  - if: os == linux && r == release 
+    Rscript -e 'covr::codecov()'
 
 warnings_are_errors: true
