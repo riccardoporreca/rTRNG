@@ -14,7 +14,6 @@ r:
 #- oldrel
 
 after_success:
-- if: os == linux && r == release 
-  Rscript -e 'covr::codecov()'
+  - if [ "$TRAVIS_OS_NAME" = "linux" ] Rscript -e 'covr::codecov()'
 
 warnings_are_errors: true
