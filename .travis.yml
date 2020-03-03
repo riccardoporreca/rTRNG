@@ -7,13 +7,17 @@ os:
 - linux
 - osx
 
+# Vanilla macOS machine: remove preinstalled homebrew installation
 disable_homebrew: true
 
 r:
 - release
-#- oldrel
+# - oldrel
 
 after_success:
-  - if [ "$TRAVIS_OS_NAME" = "linux" ] Rscript -e 'covr::codecov()'
+  - >-
+    if [ "$TRAVIS_OS_NAME" = "linux" ] && [ "$TRAVIS_R_VERSION_STRING" = "release" ];
+      Rscript -e 'covr::codecov()';
+    fi
 
 warnings_are_errors: true
