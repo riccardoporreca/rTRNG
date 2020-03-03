@@ -6,7 +6,8 @@ cache: packages
 os:
 - linux
 - osx
-  disable_homebrew: true
+
+disable_homebrew: true
 
 r:
 - release
