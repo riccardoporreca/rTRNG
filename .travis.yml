@@ -15,6 +15,12 @@ os:
 # Vanilla macOS machine: remove preinstalled homebrew installation
 disable_homebrew: true
 
+jobs:
+  exclude:
+  # macOS binary packages not available for r-devel
+  - r: devel
+    os: osx
+  
 # Code coverage
 after_success:
   - >-
