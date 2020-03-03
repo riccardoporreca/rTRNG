@@ -3,21 +3,26 @@
 language: r
 cache: packages
 
+r:
+- devel
+- release
+- oldrel
+
 os:
 - linux
-# - osx
+- osx
 
 # Vanilla macOS machine: remove preinstalled homebrew installation
 disable_homebrew: true
 
-r:
-- release
-- oldrel
-
+# Code coverage
 after_success:
   - >-
     if [ "$TRAVIS_OS_NAME" = "linux" ] && [ "$TRAVIS_R_VERSION_STRING" = "release" ]; then
-      Rscript -e 'covr::codecov()';
+      echo Code coverage...
+      Rscript -e 'covr::codecov()'
+    else
+      echo Skip code coverage
     fi
 
 warnings_are_errors: true
