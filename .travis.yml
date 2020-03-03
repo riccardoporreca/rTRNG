@@ -1,6 +1,6 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
-language: R
+language: r
 cache: packages
 
 os:
@@ -12,28 +12,5 @@ disable_homebrew: true
 r:
 - release
 #- oldrel
-
-script:
-  - Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes")'
-#  - Rscript -e 'remotes::install_deps(dependencies = TRUE)'
-#  - R CMD INSTALL .
-#  - R CMD otool -L /Users/travis/R/Library/rTRNG/libs/rTRNG.so
-#  - Rscript -e 'library(rTRNG);testthat::test_dir("tests/testthat")'
-#  - R CMD build --no-build-vignettes .
-#  - R CMD check *.tar.gz
-
-# matrix:
-#  include:
-#  - r: devel
-#  - r: release
-#    after_success:
-#    - Rscript -e 'covr::codecov()'
-#  - r: oldrel
-#  - os: osx
-#    r: release
-#  - os: osx
-#    r: release
-#    * checking for unstated dependencies in ‘tests’ ... OK
-
 
 warnings_are_errors: true
