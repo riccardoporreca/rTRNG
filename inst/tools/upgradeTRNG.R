@@ -7,8 +7,14 @@ upgradeTRNG <- function(version, base_url = "https://numbercrunch.de/trng",
                         cleanTmp = TRUE) {
 
   pre_4.22 <- package_version(version) < package_version("4.22")
+  gh_only <- package_version(version) == package_version("4.23")
   lib.tar.gz <- sprintf("trng-%s.tar.gz", version)
-  libURL <- sprintf("%s/%s", base_url, lib.tar.gz)
+  if (gh_only) {
+    gh_base_url <- "https://github.com/rabauke/trng4/archive"
+    libURL <- sprintf("%s/v%s.tar.gz", gh_base_url, version)
+  } else {
+    libURL <- sprintf("%s/%s", base_url, lib.tar.gz)
+  }
   tmpDir <- tempdir()
   lib.tar.gz.path <- file.path(tmpDir, lib.tar.gz)
 
