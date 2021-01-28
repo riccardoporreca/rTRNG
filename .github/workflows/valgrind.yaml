@@ -36,7 +36,7 @@ jobs:
       - name: Detect valgrind issues
         working-directory: valgrind-test
         run: |
-          grep -r --exclude=valgrind-summary "ERROR SUMMARY" valgrind-test > valgrind-summary
+          grep -r --exclude=valgrind-summary "ERROR SUMMARY" . > valgrind-summary
           cat valgrind-summary
           if grep -iv "ERROR SUMMARY: 0 errors" valgrind-summary; then
             echo "::error ::Found valgrind errors"
