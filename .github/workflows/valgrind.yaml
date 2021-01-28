@@ -21,7 +21,6 @@ jobs:
       - name: Detect valgrind issues
         working-directory: valgrind-check
         run: |
-          cat valgrind-summary
           if grep -iv "ERROR SUMMARY: 0 errors" valgrind-summary; then
             echo "::error ::Found valgrind errors"
             exit 1

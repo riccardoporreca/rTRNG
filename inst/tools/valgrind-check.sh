@@ -14,5 +14,5 @@ docker run --rm -v $(pwd):/rTRNG wch1/r-debug bash -c ' \
     $(ls rTRNG_*.tar.gz) \
   '
 
-grep -ri "ERROR SUMMARY" valgrind-check/rTRNG.Rcheck > valgrind-check/valgrind-summary
+grep -ri "ERROR SUMMARY" valgrind-check/rTRNG.Rcheck --exclude-dir=*pkg_src > valgrind-check/valgrind-summary
 cat valgrind-check/valgrind-summary
