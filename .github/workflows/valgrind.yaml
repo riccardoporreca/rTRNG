@@ -19,13 +19,24 @@ jobs:
             RDvalgrind -e "install.packages(\"remotes\"); remotes::install_deps(\"rTRNG\", dependencies = TRUE)" \
             && RDvalgrind CMD build /rTRNG \
             && mkdir /rTRNG/valgrind-test \
+            && mkdir valgrind-test-lib \
             && RDvalgrind -d "valgrind --track-origins=yes" CMD check \
               -o /rTRNG/valgrind-test \
+              -l valgrind-test-lib \
+              --install-args="--clean" \
               --use-valgrind --no-stop-on-test-error \
               $(ls rTRNG_*.tar.gz) \
           '
+
+      - name: Detect valgrind issues
+        run: |
+          grep -r --exclude=valgrind-summary "ERROR SUMMARY" . > valgrind-test/valgrind-summary
+          cat valgrind-test/valgrind-summary
+          if grep -iv "ERROR SUMMARY: 0 errors" valgrind-summary; then
+            echo "::error file=app.js,line=10,col=15::Something went wrong"
+          fi
+
       - name: Upload check results
-        # if: failure()
         uses: actions/upload-artifact@main
         with:
           name: valgrind-test-results
