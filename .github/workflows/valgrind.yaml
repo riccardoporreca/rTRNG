@@ -16,6 +16,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Test with valgrind
+        if: false
         run: |
           mkdir valgrind-test
           docker run --rm -v $(pwd):/rTRNG wch1/r-debug sh -c ' \
@@ -32,12 +33,18 @@ jobs:
 
       - name: Detect valgrind issues
         working-directory: valgrind-test
+        if: false
         run: |
           grep -r --exclude=valgrind-summary "ERROR SUMMARY" . > valgrind-summary
           cat valgrind-summary
           if grep -iv "ERROR SUMMARY: 0 errors" valgrind-summary; then
             echo "::error ::Found valgrind errors"
           fi
+
+      - name: Failing step
+        run: |
+          echo "::error ::$(ls -l)"
+          exit 1
 
       - name: Upload check results
         if: always()
