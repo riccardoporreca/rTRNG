@@ -5,44 +5,31 @@ on: [push, pull_request]
 name: valgrind
 
 jobs:
-  valgrind-test:
-    # git commit --allow-empty -m 'Trigger [valgrind-test]'
-    if: contains(github.event.head_commit.message, '[valgrind-test]') || github.ref == 'refs/heads/master' || github.base_ref == 'refs/heads/master'
+  valgrind-check:
+    # git commit --allow-empty -m 'Trigger [valgrind-check]'
+    if: contains(github.event.head_commit.message, '[valgrind-check]') || github.ref == 'refs/heads/master' || github.base_ref == 'refs/heads/master'
     runs-on: ubuntu-latest
 
-    name: valgrind-test
+    name: valgrind-check
 
     steps:
       - uses: actions/checkout@v2
 
-      - name: Test with valgrind
-        run: |
-          mkdir valgrind-test
-          docker run --rm -v $(pwd):/rTRNG wch1/r-debug sh -c ' \
-            RDvalgrind -e "install.packages(\"remotes\"); remotes::install_deps(\"rTRNG\", dependencies = TRUE)" \
-            && RDvalgrind CMD build /rTRNG \
-            && mkdir valgrind-test-lib \
-            && RDvalgrind -d "valgrind --track-origins=yes" CMD check \
-              -o /rTRNG/valgrind-test \
-              -l valgrind-test-lib \
-              --install-args="--clean" \
-              --use-valgrind --no-stop-on-test-error \
-              $(ls rTRNG_*.tar.gz) \
-          '
+      - name: Check with valgrind
+        run: bash inst/tools/valgrind-check.sh
 
       - name: Detect valgrind issues
-        working-directory: valgrind-test
+        working-directory: valgrind-check
         run: |
-          grep -r --exclude=valgrind-summary "ERROR SUMMARY" . > valgrind-summary
           cat valgrind-summary
           if grep -iv "ERROR SUMMARY: 0 errors" valgrind-summary; then
             echo "::error ::Found valgrind errors"
             exit 1
           fi
 
-      - name: Upload check results
+      - name: Upload valgrind results
         if: always()
         uses: actions/upload-artifact@main
         with:
-          name: valgrind-test-results
-          path: valgrind-test
+          name: valgrind-results
+          path: valgrind-check
