@@ -13,14 +13,20 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Test docker
+      - name: Test with valgrind
         run: |
-          docker run --rm -v $(pwd):/rTRNG wch1/r-debug sh -c 'ls /rTRNG'
-
-
-      # - name: Upload check results
-      #   if: failure()
-      #   uses: actions/upload-artifact@main
-      #   with:
-      #     name: ${{ runner.os }}-r${{ matrix.config.r }}-results
-      #     path: check
+          docker run --rm -v $(pwd):/rTRNG wch1/r-debug sh -c ' \
+            RDvalgrind -e "install.packages(\"remotes\"); remotes::install_deps(\"rTRNG\", dependencies = TRUE)" \
+            && RDvalgrind CMD build /rTRNG \
+            && mkdir /rTRNG/valgrind-test \
+            && RDvalgrind -d "valgrind --track-origins=yes" CMD check \
+              -o /rTRNG/valgrind-test \
+              --use-valgrind --no-stop-on-test-error \
+              $(ls rTRNG_*.tar.gz) \
+          '
+      - name: Upload check results
+        # if: failure()
+        uses: actions/upload-artifact@main
+        with:
+          name: valgrind-test-results
+          path: valgrind-test
