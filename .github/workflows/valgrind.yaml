@@ -7,7 +7,7 @@ name: valgrind
 jobs:
   valgrind-check:
     # git commit --allow-empty -m 'Trigger [valgrind-check]'
-    if: contains(github.event.head_commit.message, '[valgrind-check]') || github.ref == 'refs/heads/master' || github.base_ref == 'refs/heads/master'
+    if: contains(github.event.head_commit.message, '[valgrind-check]') || github.ref == 'refs/heads/master' || github.event.pull_request.base.ref == 'wip-4.23'
     runs-on: ubuntu-latest
 
     name: valgrind-check
